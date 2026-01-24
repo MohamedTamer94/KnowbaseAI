@@ -1,28 +1,29 @@
-from dotenv import load_dotenv
-import os
+from pydantic_settings import BaseSettings
 
-# Load .env file if present
-load_dotenv()
+class Settings(BaseSettings):
+    # LLM / AI
+    GROQ_API_KEY: str
+    GROQ_LLM_MODEL: str = "llama-3.3-70b-versatile"
 
-# Groq settings
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-GROQ_LLM_MODEL = os.getenv("GROQ_LLM_MODEL", "llama-3.3-70b-versatile")
+    # Vector DB
+    CHROMA_HOST: str = "localhost"
+    CHROMA_PORT: int = 8000
 
-# Chroma (vector DB)
-CHROMA_HOST = os.getenv("CHROMA_HOST", "localhost")
-CHROMA_PORT = int(os.getenv("CHROMA_PORT", "8000"))
+    # Embeddings
+    SENTENCE_TRANSFORMER_MODEL: str = "all-MiniLM-L6-v2"
 
-# Sentence Transformer model
-SENTENCE_TRANSFORMER_MODEL = os.getenv("SENTENCE_TRANSFORMER_MODEL", "all-MiniLM-L6-v2")
+    # Frontend / CORS
+    CLIENT_URL: str = "http://localhost:5173"
 
-# Client URL for CORS and origin validation
-CLIENT_URL = os.getenv("CLIENT_URL", "http://localhost:5173")
+    # Auth
+    JWT_SECRET_KEY: str = "your-super-secret-key-change-in-production-use-32-characters"
 
-# JWT Secret Key
-JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "your-super-secret-key-change-in-production-use-32-characters")
+    # Optional environment
+    ENV: str = "development"
 
+    class Config:
+        env_file = ".env"  # single env file at project root
+        env_file_encoding = "utf-8"
 
-# Optional: verify critical vars (don't raise here so app can still start in dev)
-if not GROQ_API_KEY:
-    # It's fine to warn; the actual call will raise if key is missing when used
-    print("⚠️  GROQ_API_KEY not set. Set it in your .env or environment variables.")
+# Create a global settings object
+settings = Settings()

@@ -1,9 +1,9 @@
 from typing import List, Dict, Generator
 from groq import Groq, GroqError
-from app.config import GROQ_API_KEY, GROQ_LLM_MODEL
+from app.config import settings
 
 # Initialize the client
-client = Groq(api_key=GROQ_API_KEY)
+client = Groq(api_key=settings.GROQ_API_KEY)
 
 def chat_completion_stream(
     messages: List[Dict[str, str]],
@@ -15,7 +15,7 @@ def chat_completion_stream(
     """
     try:
         stream = client.chat.completions.create(
-            model=GROQ_LLM_MODEL,
+            model=settings.GROQ_LLM_MODEL,
             messages=messages,
             temperature=temperature,
             stream=True,
@@ -60,7 +60,7 @@ def rewrite_query_if_needed(query: str, history: list):
     })
 
     rewritten = client.chat.completions.create(
-        model=GROQ_LLM_MODEL,
+        model=settings.GROQ_LLM_MODEL,
         messages=messages,
         temperature=0
     )

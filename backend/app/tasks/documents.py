@@ -16,14 +16,14 @@ from bs4 import BeautifulSoup
 
 import chromadb
 
-from app.config import CHROMA_HOST, CHROMA_PORT, SENTENCE_TRANSFORMER_MODEL, GROQ_LLM_MODEL
+from app.config import settings 
 from app.utils.groq_client import chat_completion_stream, rewrite_query_if_needed
 
 from pathlib import Path
 
-model = SentenceTransformer(SENTENCE_TRANSFORMER_MODEL)
+model = SentenceTransformer(settings.SENTENCE_TRANSFORMER_MODEL)
 
-chroma_client = chromadb.HttpClient(host=CHROMA_HOST, port=CHROMA_PORT)
+chroma_client = chromadb.HttpClient(host=settings.CHROMA_HOST, port=settings.CHROMA_PORT)
 
 def process_document(db: Session, document: Document):
     try:

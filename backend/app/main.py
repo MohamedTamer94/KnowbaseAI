@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from app.api.v1.api import api_router
-from app.config import CLIENT_URL
+from app.config import settings
 
 from app.db import Base, engine
 
@@ -12,7 +12,7 @@ app = FastAPI(title="KnowbaseAI", version="1.0.0")
 # Standard strict CORS for the Dashboard
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[CLIENT_URL],
+    allow_origins=[settings.CLIENT_URL],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
