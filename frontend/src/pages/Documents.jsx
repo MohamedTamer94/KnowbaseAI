@@ -1,5 +1,5 @@
 import React from 'react';
-import { listDocuments, uploadDocument } from '../api/tenant';
+import { listDocuments, uploadDocument, deleteDocument, updateDocumentName } from '../api/tenant';
 import { formatDate } from '../utils/utils';
 import '../styles/document.css';
 
@@ -12,6 +12,11 @@ export default function Documents() {
     const [menuOpen, setMenuOpen] = React.useState(false);
     const [showUrlDialog, setShowUrlDialog] = React.useState(false);
     const [urlInput, setUrlInput] = React.useState('');
+    const [openDocMenu, setOpenDocMenu] = React.useState(null);
+    const [renameDialog, setRenameDialog] = React.useState(null);
+    const [renamingId, setRenamingId] = React.useState(null);
+    const [renameValue, setRenameValue] = React.useState('');
+    const [deletingId, setDeletingId] = React.useState(null);
     const fileInputRef = React.useRef(null);
     const menuRef = React.useRef(null);
     const addBtnRef = React.useRef(null);
@@ -98,6 +103,53 @@ export default function Documents() {
         }
     }
 
+    async function handleDelete(docId) {
+        if (!window.confirm('Are you sure you want to delete this document?')) return;
+        
+        setError('');
+        setSuccess('');
+        setDeletingId(docId);
+        try {
+            await deleteDocument(docId);
+            setSuccess('Document deleted successfully.');
+            setOpenDocMenu(null);
+            await refresh();
+        } catch (err) {
+            console.error(err);
+            setError(err.message || 'Delete failed.');
+        } finally {
+            setDeletingId(null);
+        }
+    }
+
+    function openRenameDialog(doc) {
+        setRenameDialog(doc);
+        setRenameValue(doc.filename);
+        setOpenDocMenu(null);
+    }
+
+    async function handleRename() {
+        if (!renameValue.trim()) {
+            setError('Please enter a filename.');
+            return;
+        }
+
+        setError('');
+        setSuccess('');
+        setRenamingId(renameDialog.id);
+        try {
+            await updateDocumentName(renameDialog.id, renameValue);
+            setSuccess('Document renamed successfully.');
+            setRenameDialog(null);
+            await refresh();
+        } catch (err) {
+            console.error(err);
+            setError(err.message || 'Rename failed.');
+        } finally {
+            setRenamingId(null);
+        }
+    }
+
   return (
     <div>
       <div className="documents-header">
@@ -140,6 +192,20 @@ export default function Documents() {
         </div>
       )}
 
+      {/* Rename dialog */}
+      {renameDialog && (
+        <div className="url-overlay">
+          <div className="url-dialog">
+            <h3>Rename document</h3>
+            <input className="input" value={renameValue} onChange={(e) => setRenameValue(e.target.value)} placeholder="New filename" />
+            <div className="dialog-actions">
+              <button className="btn" onClick={() => setRenameDialog(null)}>Cancel</button>
+              <button className="btn" onClick={handleRename} disabled={renamingId !== null}>{renamingId ? 'Renaming...' : 'Rename'}</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {error && <div className="error message">{error}</div>}
       {success && <div className="success message">{success}</div>}
 
@@ -149,6 +215,7 @@ export default function Documents() {
           <div>Type</div>
           <div>Status</div>
           <div>Created at</div>
+          <div style={{ width: '40px' }}></div>
         </header>
         {documents.map((doc) => (
           <div className="row" key={doc.id || doc.filename}>
@@ -156,6 +223,33 @@ export default function Documents() {
             <div>{doc.type}</div>
             <div>{doc.status}</div>
             <div>{formatDate(doc.created_at)}</div>
+            <div className="doc-actions">
+              <button 
+                className="action-btn" 
+                onClick={() => setOpenDocMenu(openDocMenu === doc.id ? null : doc.id)}
+                aria-label="Document actions"
+              >
+                ⋮
+              </button>
+              {openDocMenu === doc.id && (
+                <div className="doc-menu">
+                  <button 
+                    className="menu-item" 
+                    onClick={() => openRenameDialog(doc)}
+                    disabled={renamingId === doc.id}
+                  >
+                    Rename
+                  </button>
+                  <button 
+                    className="menu-item delete" 
+                    onClick={() => handleDelete(doc.id)}
+                    disabled={deletingId === doc.id}
+                  >
+                    {deletingId === doc.id ? 'Deleting...' : 'Delete'}
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </div>

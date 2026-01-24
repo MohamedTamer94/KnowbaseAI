@@ -7,8 +7,7 @@ export const TenantProvider = ({ children }) => {
   const [tenant, setTenant] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchTenant = async () => {
+  const fetchTenant = async () => {
       try {
         const data = await getTenant(); // fetch current tenant info from backend
         setTenant(data);
@@ -19,11 +18,17 @@ export const TenantProvider = ({ children }) => {
       }
     };
 
+  useEffect(() => {
     fetchTenant();
   }, []);
 
+  const refetch = async () => {
+    setLoading(true);
+    await fetchTenant();
+  }
+
   return (
-    <TenantContext.Provider value={{ tenant, setTenant, loading }}>
+    <TenantContext.Provider value={{ tenant, setTenant, loading, refetch }}>
       {children}
     </TenantContext.Provider>
   );

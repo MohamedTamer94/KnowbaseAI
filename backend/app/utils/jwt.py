@@ -3,9 +3,10 @@ from datetime import timedelta, datetime
 from typing import Optional
 from jose import jwt
 from jose.exceptions import JWTError
+from app.config import JWT_SECRET_KEY
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
-SECRET_KEY = os.getenv('SECRET_KEY', 'mypassword')
+SECRET_KEY = JWT_SECRET_KEY
 ALGORITHM = "HS256"
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):

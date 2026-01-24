@@ -22,3 +22,13 @@ def update_document_status(db: Session, document: Document, status: str):
 
 def get_document(db: Session, document_id: str):
     return db.query(Document).filter(Document.id == document_id).one_or_none()
+
+def update_document_name(db: Session, document: Document, new_filename: str):
+    document.filename = new_filename
+    db.commit()
+    db.refresh(document)
+    return document
+
+def delete_document(db: Session, document: Document):
+    db.delete(document)
+    db.commit()

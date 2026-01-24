@@ -10,6 +10,7 @@ class DocumentType(str, enum.Enum):
     docx = "docx"
     pptx = "pptx"
     website = "website"
+    text = "text"
     other = "other"
 
 class Document(Base):

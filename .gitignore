@@ -1,11 +1,117 @@
+# ===========================================
+# Python
+# ===========================================
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual Environments
 .venv/
 venv/
 env/
+ENV/
+env.bak/
+venv.bak/
+
+# ===========================================
+# Node.js / Frontend
+# ===========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm-cache/
+dist/
+build/
+
+# ===========================================
+# Environment Variables
+# ===========================================
 .env
-.git
-storage/
-*.sqlite3
+.env.local
+.env.*.local
+.env.production.local
+
+# ===========================================
+# IDEs
+# ===========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+.project
+.pydevproject
+.settings/
+*.iml
+
+# ===========================================
+# Logs
+# ===========================================
+logs/
+*.log
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# ===========================================
+# Temporary Files
+# ===========================================
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+
+# ===========================================
+# Docker
+# ===========================================
+.docker/
+docker-compose.override.yml
+
+# ===========================================
+# OS-specific
+# ===========================================
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# ===========================================
+# Test & Coverage
+# ===========================================
+.pytest_cache/
+.coverage
+htmlcov/
+coverage/
+*.cover
+
+# ===========================================
+# Documentation
+# ===========================================
+site/
+docs/_build/

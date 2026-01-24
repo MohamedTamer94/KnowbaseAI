@@ -25,10 +25,5 @@ export default function ProtectedRoute() {
     return <Navigate to="/login" replace />;
   }
 
-  // If no tenant_id in token, send user to tenant selection
-  if (!payload.tenant_id) {
-    return <Navigate to="/select-tenant" replace />;
-  }
-
   return <Outlet />;
 }

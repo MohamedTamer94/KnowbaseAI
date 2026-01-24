@@ -27,6 +27,12 @@ def get_user_tenants(db: Session, user_id: str) -> list | None:
             .filter(UserTenant.user_id == user_id)
             .all())
 
+def get_tenant_users(db: Session, tenant_id: str) -> list[UserTenant] | None:
+    return (db.query(UserTenant)
+            .options(joinedload(UserTenant.user))
+            .filter(UserTenant.tenant_id == tenant_id)
+            .all())
+
 def tenant_has_user(db: Session, tenant_id: str, user_id: str) -> UserTenant | None:
     return (db.query(UserTenant)
             .filter(UserTenant.tenant_id == tenant_id, UserTenant.user_id == user_id)
@@ -36,8 +42,8 @@ def get_tenant(db: Session, tenant_id: str) -> Tenant | None:
     return (db.query(Tenant)
             .filter(Tenant.id == tenant_id)
             .first())
-
-def get_tenant_with_stats(db: Session, tenant_id: str):
+def get_tenant_with_stats(db: Session, tenant_id: str, user_id: str):
+    # First, get tenant + stats
     result = (
         db.query(
             Tenant,
@@ -55,7 +61,18 @@ def get_tenant_with_stats(db: Session, tenant_id: str):
         return None
 
     tenant, user_count, document_count = result
-    print(tenant, user_count, document_count)
+
+    # Now get the role for this user in this tenant
+    user_tenant = (
+        db.query(UserTenant)
+        .filter(
+            UserTenant.tenant_id == tenant_id,
+            UserTenant.user_id == user_id
+        )
+        .first()
+    )
+
+    role = user_tenant.role if user_tenant else None  # or raise an exception if user not part of tenant
 
     return {
         "id": tenant.id,
@@ -63,6 +80,7 @@ def get_tenant_with_stats(db: Session, tenant_id: str):
         "created_at": tenant.created_at,
         "user_count": user_count,
         "document_count": document_count,
+        "role": role
     }
 
 def add_user_to_tenant(db: Session, user_id: str, tenant_id: str, role: str = "member") -> UserTenant:

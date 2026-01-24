@@ -48,6 +48,7 @@ export default function Login() {
             }
 
             if (data.access_token) {
+                localStorage.removeItem('chatSessionId');
                 localStorage.setItem('token', data.access_token);
                 navigate('/app');
             } else {

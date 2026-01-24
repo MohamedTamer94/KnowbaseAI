@@ -17,3 +17,4 @@ class UserTenant(Base):
         CheckConstraint("role IN ('admin', 'member')"),
     )
     tenant = relationship("Tenant")
+    user = relationship("User")

@@ -2,13 +2,13 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import SelectTenant from './pages/SelectTenant';
 import ProtectedRoute from './components/ProtectedRoute';
 import DashboardLayout from './layouts/DashboardLayout';
 import TenantLayout from './layouts/TenantLayout';
 import Dashboard from './pages/Dashboard';
 import Documents from './pages/Documents';
 import Chat from './pages/Chat';
+import Widgets from './pages/Widgets';
 import Settings from './pages/Settings';
 
 export default function App() {
@@ -16,7 +16,6 @@ export default function App() {
         <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/select-tenant" element={<SelectTenant />} />
 
             <Route path="/app" element={<ProtectedRoute />}>
                 <Route element={<TenantLayout />}>
@@ -25,6 +24,7 @@ export default function App() {
                         <Route path="dashboard" element={<Dashboard />} />
                         <Route path="documents" element={<Documents />} />
                         <Route path="chat" element={<Chat />} />
+                        <Route path="widgets" element={<Widgets />} />
                         <Route path="settings" element={<Settings />} />
                     </Route>
                 </Route>
