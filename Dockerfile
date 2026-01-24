@@ -5,7 +5,7 @@
 # ============================================
 # STAGE 1: Build Stage - Python Dependencies
 # ============================================
-FROM python:3.14-slim as builder
+FROM python:3.10-slim as builder
 
 WORKDIR /app
 
