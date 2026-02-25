@@ -61,8 +61,8 @@ services:
       CLIENT_URL: ${CLIENT_URL:-http://localhost:3000}
 
       # JWT Secret
-      JWT_SECRET: ${JWT_SECRET:-your-secret-key-change-in-production}
-
+      JWT_SECRET: ${JWT_SECRET}
+      
       # Python Settings
       PYTHONUNBUFFERED: 1
       PYTHONDONTWRITEBYTECODE: 1
