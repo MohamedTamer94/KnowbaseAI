@@ -13,6 +13,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # /app/backend/app
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 
 app = FastAPI(title="KnowbaseAI", version="1.0.0")
+app.router.redirect_slashes = False
 
 # Standard strict CORS for the Dashboard
 app.add_middleware(
