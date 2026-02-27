@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import {register} from "../api/tenant";
 import '../styles/auth.css';
 
 function validateEmail(email) {
@@ -31,11 +32,7 @@ export default function Signup() {
 
         setLoading(true);
         try {
-            const res = await fetch('http://localhost:3002/auth/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, password }),
-            });
+            const res = await register(name, email, password);
 
             const data = await res.json();
             if (!res.ok) {
