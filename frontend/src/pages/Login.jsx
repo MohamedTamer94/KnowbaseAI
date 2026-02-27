@@ -30,9 +30,7 @@ export default function Login() {
         setLoading(true);
         try {
             // Create form data
-            const formData = new FormData();
-            formData.append('username', email);
-            formData.append('password', password);
+            
 
             const res = await fetch('http://localhost:3002/auth/login', {
                 method: 'POST',
