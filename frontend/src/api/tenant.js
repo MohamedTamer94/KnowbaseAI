@@ -30,10 +30,10 @@ export async function login(email, password) {
     formData.append('password', password);
     const res = await apiFetch(`/auth/login`, {
         method: 'POST',
-        body: formData,
         headers: {
-            "Content-Type": "multipart/form-data"
-        }
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
     });
 
     return await res.json();
