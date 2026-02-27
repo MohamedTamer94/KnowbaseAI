@@ -6,6 +6,7 @@ python-multipart
 # --- Config / env ---
 python-dotenv
 pydantic-settings
+pydantic[email]
 
 # --- Auth / security ---
 python-jose[cryptography]
