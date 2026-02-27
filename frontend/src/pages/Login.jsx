@@ -31,9 +31,7 @@ export default function Login() {
         setLoading(true);
         try {
             // Create form data
-            const res = await login(email, password)
-
-            const data = await res.json();
+            const data = await login(email, password);
 
             if (!res.ok) {
                 setError(data.detail || data.message || 'Failed to login.');
