@@ -15,6 +15,27 @@ export async function listDocuments() {
     return await res.json();
 }
 
+export async function register(name, email, password) {
+    const res = await apiFetch(`/auth/register`, {
+        method: 'POST',
+        body: JSON.stringify({ name, email, password }),
+    });
+
+    return await res.json();
+}
+
+export async function login(email, password) {
+    const formData = new FormData();
+    formData.append('username', email);
+    formData.append('password', password);
+    const res = await apiFetch(`/auth/login`, {
+        method: 'POST',
+        body: formData,
+    });
+
+    return await res.json();
+}
+
 /**
  * Stream query response with callbacks for real-time token, sources, and session updates.
  * @param {string} question - The query question
