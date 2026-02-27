@@ -33,7 +33,7 @@ export default function Login() {
             // Create form data
             const data = await login(email, password);
 
-            if (!res.ok) {
+            if (data.detail || !data || !data.access_token) {
                 setError(data.detail || data.message || 'Failed to login.');
                 setLoading(false);
                 return;
