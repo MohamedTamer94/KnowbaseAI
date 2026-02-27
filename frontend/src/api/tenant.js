@@ -31,6 +31,9 @@ export async function login(email, password) {
     const res = await apiFetch(`/auth/login`, {
         method: 'POST',
         body: formData,
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
     });
 
     return await res.json();
