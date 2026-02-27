@@ -32,7 +32,7 @@ export async function login(email, password) {
         method: 'POST',
         body: formData,
         headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
+            "Content-Type": "multipart/form-data"
         }
     });
 
