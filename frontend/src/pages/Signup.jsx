@@ -34,7 +34,7 @@ export default function Signup() {
         try {
             const data = await register(name, email, password);
             
-            if (data.detail) {
+            if (data.detail || !data) {
                 setError(data.detail || data.message || 'Failed to create account.');
                 setLoading(false);
                 return;
