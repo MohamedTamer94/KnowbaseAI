@@ -25,7 +25,7 @@ export async function register(name, email, password) {
 }
 
 export async function login(email, password) {
-    const formData = new FormData();
+    const formData = new URLSearchParams();
     formData.append('username', email);
     formData.append('password', password);
     const res = await apiFetch(`/auth/login`, {
