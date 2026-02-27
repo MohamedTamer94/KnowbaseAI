@@ -32,10 +32,9 @@ export default function Signup() {
 
         setLoading(true);
         try {
-            const res = await register(name, email, password);
-
-            const data = await res.json();
-            if (!res.ok) {
+            const data = await register(name, email, password);
+            
+            if (data.detail) {
                 setError(data.detail || data.message || 'Failed to create account.');
                 setLoading(false);
                 return;
