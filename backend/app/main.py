@@ -50,7 +50,7 @@ async def widget_cors_bridge(request: Request, call_next):
 
 app.include_router(api_router)
 
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.on_event("startup")
 def on_startup():
