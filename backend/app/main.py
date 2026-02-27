@@ -7,6 +7,11 @@ from app.config import settings
 
 from app.db import Base, engine
 
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # /app/backend/app
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+
 app = FastAPI(title="KnowbaseAI", version="1.0.0")
 
 # Standard strict CORS for the Dashboard
@@ -50,7 +55,7 @@ async def widget_cors_bridge(request: Request, call_next):
 
 app.include_router(api_router)
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 @app.on_event("startup")
 def on_startup():
