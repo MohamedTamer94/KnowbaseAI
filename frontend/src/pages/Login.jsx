@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../styles/auth.css';
+import { login } from '../api/tenant';
 
 function validateEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -30,12 +31,7 @@ export default function Login() {
         setLoading(true);
         try {
             // Create form data
-            
-
-            const res = await fetch('http://localhost:3002/auth/login', {
-                method: 'POST',
-                body: formData,
-            });
+            const res = await login(email, password)
 
             const data = await res.json();
 
