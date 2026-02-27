@@ -9,6 +9,9 @@ class Settings(BaseSettings):
     CHROMA_HOST: str = "localhost"
     CHROMA_PORT: int = 8000
 
+    # Postgres
+    DATABASE_URL: str
+
     # Embeddings
     SENTENCE_TRANSFORMER_MODEL: str = "all-MiniLM-L6-v2"
 
