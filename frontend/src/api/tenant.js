@@ -11,7 +11,7 @@ export async function getCurrentUser() {
 }
 
 export async function listDocuments() {
-    const res = await apiFetch("/documents");
+    const res = await apiFetch("/documents/");
     return await res.json();
 }
 
